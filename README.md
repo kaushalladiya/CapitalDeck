@@ -39,11 +39,15 @@ This project utilizes specific design choices to build trust and clarity:
 
 ## 🛠️ Tech Stack
 
-### Backend (CapitalDeck.API) - *Upcoming*
+### Backend (CapitalDeck.API)
 - **Framework:** Spring Boot 3.2 (Java)
-- **Build Tool:** Maven
-- **Database:** MySQL / PostgreSQL
-- **Security:** Spring Security + JWT
+- **Architecture:** Layered (Controller -> Repository -> Database)
+- **Database:** H2 In-Memory (Dev), MySQL (Prod)
+- **API Documentation:** Swagger UI (`/swagger`)
+- **Key Patterns:**
+  - **Dependency Injection:** Wiring components using `@Autowired`.
+  - **JPA:** Object-Relational Mapping for database abstraction.
+  - **CORS:** Configured for secure Frontend-Backend communication.
 
 ### Frontend (CapitalDeck.UI)
 - **Framework:** React 18.3 with Vite
@@ -85,7 +89,7 @@ This project utilizes specific design choices to build trust and clarity:
    cd ../CapitalDeck.API
 
    # Run the API
-   mvn spring-boot:run
+   ./mvnw spring-boot:run
    ```
    Backend will run on `http://localhost:8080`
 
