@@ -1,6 +1,7 @@
 import React from 'react';
 import StatCard from '../components/dashboard/StatCard';
 import IncomeChart from '../components/dashboard/IncomeChart';
+import TransactionList from '../components/dashboard/TransactionList';
 import { Wallet, TrendingUp, TrendingDown } from 'lucide-react';
 
 const Dashboard = () => {
@@ -31,21 +32,17 @@ const Dashboard = () => {
         <StatCard title="Monthly Expenses" amount={stats.expense} icon={TrendingDown} trend="down" trendValue="-2.4%" />
       </div>
 
-      {/* Main Content Grid: Charts + (Future) Recent Transactions */}
-      {/* We use a 3-column grid. The chart takes up 2 columns (col-span-2) */}
+      {/* Main Content Grid: Charts + Transactions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* The Chart takes 2/3 of the width */}
+        {/* Chart Section (Takes 2 columns on large screens) */}
         <div className="lg:col-span-2">
           <IncomeChart />
         </div>
 
-        {/* Placeholder for Recent Transactions (1/3 width) */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Recent Transactions</h3>
-          <div className="text-center text-gray-400 py-10 border-2 border-dashed border-gray-100 rounded-xl">
-             List Coming Next
-          </div>
+        {/* Recent Transactions (Takes 1 column) */}
+        <div className="h-full">
+           <TransactionList />
         </div>
 
       </div>

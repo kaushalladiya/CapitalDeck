@@ -63,36 +63,34 @@ This project utilizes specific design choices to build trust and clarity:
 ### Installation
 
 1. **Clone the repository**
-```bash
-  git clone [https://github.com/kaushalladiya/CapitalDeck.git](https://github.com/kaushalladiya/CapitalDeck.git)
-  cd CapitalDeck
-```
+   ```bash
+   git clone [https://github.com/kaushalladiya/CapitalDeck.git](https://github.com/kaushalladiya/CapitalDeck.git)
+   cd CapitalDeck
+   ```
 
 2. **Set up the Frontend**
-```bash
-  cd CapitalDeck.UI
+   ```bash
+   cd CapitalDeck.UI
 
-  # Install dependencies
-  npm install
+   # Install dependencies
+   npm install
 
-  # Run the development server
-  npm run dev
-```
-
-  Frontend will run on `http://localhost:5173`
+   # Run the development server
+   npm run dev
+   ```
+   Frontend will run on `http://localhost:5173`
 
 3. **Set up the Backend** (Once implemented)
-```bash
-  cd ../CapitalDeck.API
+   ```bash
+   cd ../CapitalDeck.API
 
-  # Run the API
-  mvn spring-boot:run
-```
-
-  Backend will run on `http://localhost:8080`
+   # Run the API
+   mvn spring-boot:run
+   ```
+   Backend will run on `http://localhost:8080`
 
 4. **Open in browser**
-  Navigate to `http://localhost:5173`
+   Navigate to `http://localhost:5173`
 
 ## 📁 Project Structure
 
