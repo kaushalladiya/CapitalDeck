@@ -1,8 +1,9 @@
 package com.capitaldeck.api.controller;
 
 import com.capitaldeck.api.model.Transaction;
-import com.capitaldeck.api.repository.TransactionRepository;
+import com.capitaldeck.api.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,18 +13,26 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173") // 3. Allow React to talk to us
 public class TransactionController {
 
+    // Dependency Injection: Inject the SERVICE, not the Repository
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
-    // 1. GET Request: Returns a list of all transactions
+    // 1. GET Request
     @GetMapping
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
+        return ResponseEntity.ok(transactionService.getAllTransactions());
     }
 
-    // 2. POST Request: React sends JSON, we save it to Database
+    // 2. POST Request
     @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionRepository.save(transaction);
+    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
+        return ResponseEntity.ok(transactionService.createTransaction(transaction));
+    }
+
+    // 3. DELETE Request
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
+        transactionService.deleteTransaction(id);
+        return ResponseEntity.noContent().build(); // Returns 204 No Content (Standard for Delete)
     }
 }

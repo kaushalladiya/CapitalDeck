@@ -1,16 +1,8 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
-const IncomeChart = () => {
-  const data = [
-    { name: 'Jan', income: 4000, expense: 2400 },
-    { name: 'Feb', income: 3000, expense: 1398 },
-    { name: 'Mar', income: 2000, expense: 9800 },
-    { name: 'Apr', income: 2780, expense: 3908 },
-    { name: 'May', income: 1890, expense: 4800 },
-    { name: 'Jun', income: 2390, expense: 3800 },
-  ];
-
+const IncomeChart = ({ data }) => {
+  
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -40,6 +32,7 @@ const IncomeChart = () => {
       {/* CHART AREA */}
       {/* ResponsiveContainer makes the chart adapt to mobile/desktop screens automatically */}
       <ResponsiveContainer width="100%" height="85%">
+        {/* Use the 'data' prop here */}
         <BarChart data={data} barGap={8}>
           
           {/* Grid Lines: dashed and light gray for subtle guidance */}
@@ -51,7 +44,7 @@ const IncomeChart = () => {
             axisLine={false} 
             tickLine={false} 
             tick={{ fill: '#6B7280', fontSize: 12 }} 
-            dy={10}
+            dy={10} 
           />
           
           {/* Y Axis: The numbers on the left */}
@@ -59,19 +52,17 @@ const IncomeChart = () => {
             axisLine={false} 
             tickLine={false} 
             tick={{ fill: '#6B7280', fontSize: 12 }} 
-            tickFormatter={(value) => `₹${value}`}
+            tickFormatter={(value) => `₹${value}`} 
           />
           
           {/* The Tooltip we defined above */}
           <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F3F4F6' }} />
-          
           <Legend wrapperStyle={{ paddingTop: '20px' }} />
 
           {/* The Bars */}
           {/* Radius: [4, 4, 0, 0] makes the top corners rounded (Modern UI trend) */}
           <Bar dataKey="income" name="Income" fill="#16A34A" radius={[4, 4, 0, 0]} barSize={30} />
           <Bar dataKey="expense" name="Expense" fill="#DC2626" radius={[4, 4, 0, 0]} barSize={30} />
-          
         </BarChart>
       </ResponsiveContainer>
     </div>
