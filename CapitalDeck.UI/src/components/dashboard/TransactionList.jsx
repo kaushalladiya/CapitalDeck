@@ -1,7 +1,7 @@
 import React from 'react';
-import { ShoppingBag, Utensils, Zap, Briefcase, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Utensils, Zap, Briefcase, ArrowRight, Trash2 } from 'lucide-react';
 
-const TransactionList = ({ transactions = [], loading = false }) => {
+const TransactionList = ({ transactions = [], loading = false, onDelete }) => {
   
   // Helper to choose the right icon
   const getCategoryIcon = (category) => {
@@ -37,6 +37,8 @@ const TransactionList = ({ transactions = [], loading = false }) => {
         {/* DATA MAPPING */}
         {transactions.map((tx) => (
           <div key={tx.id} className="flex items-center justify-between group cursor-pointer">
+            
+            {/* Left Side: Icon + Text */}
             <div className="flex items-center space-x-4">
               <div className="p-3 bg-gray-50 rounded-xl group-hover:bg-green-50 transition-colors">
                 {getCategoryIcon(tx.category)}
@@ -51,11 +53,28 @@ const TransactionList = ({ transactions = [], loading = false }) => {
                 </p>
               </div>
             </div>
-            <div className={`font-mono font-bold ${
-              tx.type === 'INCOME' ? 'text-green-600' : 'text-gray-900'
-            }`}>
-              {tx.type === 'INCOME' ? '+' : '-'}₹{tx.amount.toLocaleString('en-IN')}
+
+            {/* Right Side: Amount + Delete Button */}
+            <div className="flex items-center space-x-4">
+              <div className={`font-mono font-bold ${
+                tx.type === 'INCOME' ? 'text-green-600' : 'text-gray-900'
+              }`}>
+                {tx.type === 'INCOME' ? '+' : '-'}₹{tx.amount.toLocaleString('en-IN')}
+              </div>
+
+              {/* DELETE BUTTON: Opacity 0 by default, 100 on Hover */}
+              <button 
+                onClick={(e) => {
+                    e.stopPropagation(); // Stop click from bubbling up
+                    onDelete(tx.id);
+                }}
+                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
+                title="Delete Transaction"
+              >
+                <Trash2 size={18} />
+              </button>
             </div>
+            
           </div>
         ))}
       </div>

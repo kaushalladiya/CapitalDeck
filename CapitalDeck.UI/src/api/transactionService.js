@@ -13,6 +13,11 @@ const TransactionService = {
     createTransaction: async (transactionData) => {
         const response = await api.post('/transactions', transactionData);
         return response.data;
+    },
+
+    // DELETE /api/transactions/{id}
+    deleteTransaction: async (id) => {
+        await api.delete(`/transactions/${id}`);
     }
 };
 

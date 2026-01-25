@@ -13,19 +13,26 @@ A full-stack financial intelligence platform for tracking personal income and ex
 
 ## ✨ Features
 
-### ✅ Implemented Features (Frontend)
-- **Professional Architecture**: Monorepo structure separating `CapitalDeck.UI` and `CapitalDeck.API`.
+### ✅ Implemented Features
+- **Full-Stack Architecture**: React frontend communicating with Spring Boot REST API.
+- **Layered Backend Architecture**: Professional separation of concerns (Controller → Service → Repository).
+- **CRUD Operations**:
+  - **Create**: Add transactions via a smart modal with dynamic category selection.
+  - **Read**: Real-time dashboard updates fetching data from H2 Database.
+  - **Delete**: Remove transactions with a secure confirmation flow.
+- **Data Visualization**:
+  - **Interactive Charts**: "Income vs Expense" Bar Charts using Recharts (Dynamic aggregation).
+  - **Smart Stats**: Real-time calculation of Total Balance, Income, and Expense.
 - **UX & Design**:
-  - [x] **Smart Dashboard**: Gradient summary cards (Income, Expense, Balance).
-  - [x] **Data Visualization**: Interactive "Income vs Expense" Bar Charts using Recharts.
-  - [x] **Monospace Typography**: "Cascadia Code" for financial precision.
-  - [x] **Glassmorphism**: Sticky navigation with backdrop blur and Lucide icons.
-- **Responsive Layout**: Adapts from mobile (stacked) to desktop (3-column) grids.
+  - **Smart Dashboard**: Gradient summary cards and responsive grid layouts.
+  - **Monospace Typography**: "Cascadia Code" for financial precision.
+  - **Glassmorphism**: Sticky navigation with backdrop blur and Lucide icons.
+  - **Defensive UI**: Smart category filtering (Income categories vs Expense categories).
 
-### 🚧 Planned Features (Backend)
+### 🚧 Planned Features
+- **Persistence**: Migration from H2 (In-Memory) to MySQL/PostgreSQL.
 - **Secure Authentication**: Spring Security + JWT Implementation.
-- **RESTful API**: Endpoints for Transaction CRUD operations.
-- **Database Integration**: MySQL/PostgreSQL with Hibernate/JPA.
+- **Advanced Reporting**: Downloadable PDF/CSV reports.
 
 ## 🎨 Design Philosophy
 
@@ -51,11 +58,10 @@ This project utilizes specific design choices to build trust and clarity:
 
 ### Frontend (CapitalDeck.UI)
 - **Framework:** React 18.3 with Vite
-- **Routing:** React Router DOM
+- **HTTP Client:** Axios (Custom instance with Interceptors)
 - **Visualization:** Recharts
 - **Styling:** Tailwind CSS 3.4
-- **State Management:** React Context API
-- **HTTP Client:** Axios
+- **State Management:** React Hooks (useState, useEffect)
 
 ## 🚀 Getting Started
 
@@ -100,19 +106,31 @@ This project utilizes specific design choices to build trust and clarity:
 
 ```
 CapitalDeck/
-├── CapitalDeck.API/          # Spring Boot Backend (Skeleton)
+├── CapitalDeck.API/          # Spring Boot Backend
+│   ├── src/main/java/com/capitaldeck/api/
+│   │   ├── controller/       # REST Endpoints (The "Waiter")
+│   │   ├── service/          # Business Logic (The "Chef")
+│   │   ├── repository/       # Database Access (The "Pantry")
+│   │   └── model/            # JPA Entities (The "Ingredients")
+│   └── pom.xml               # Maven Dependencies
 │
 └── CapitalDeck.UI/           # React Frontend
     ├── src/
-    │   ├── components/
-    │   │   ├── dashboard/    # StatCards, Charts
-    │   │   └── layout/       # Navbar, Layout Wrapper
-    │   ├── pages/            # Dashboard Page
-    │   ├── App.jsx           # Route Definitions
-    │   └── main.jsx          # Entry Point & Font Loading
+    │   ├── api/              # Axios Services (transactionService.js)
+    │   ├── components/       # Reusable UI (Charts, Modals, Cards)
+    │   ├── pages/            # Page Views (Dashboard.jsx)
+    │   └── App.jsx           # Main Router
     └── tailwind.config.js    # Design System Config
 
 ```
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| **GET** | `/api/transactions` | Retrieve all transactions |
+| **POST** | `/api/transactions` | Create a new transaction |
+| **DELETE** | `/api/transactions/{id}` | Delete a transaction by ID |
 
 ## 👨‍💻 Author
 
@@ -124,7 +142,7 @@ CapitalDeck/
 ## 🙏 Acknowledgments
 
 * Built as part of full-stack development learning journey
-* Thanks to the .NET and React communities for excellent documentation
+* Thanks to the Java(Spring) and React communities for excellent documentation
 * Tailwind CSS for making styling enjoyable
 
 ---
