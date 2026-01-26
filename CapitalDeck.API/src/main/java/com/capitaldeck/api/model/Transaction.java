@@ -30,6 +30,10 @@ public class Transaction {
     // Automatically set the date when created
     private LocalDateTime date;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     // This runs automatically before saving to DB
     @PrePersist
     protected void onCreate() {
