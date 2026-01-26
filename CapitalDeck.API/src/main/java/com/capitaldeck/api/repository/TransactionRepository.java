@@ -13,4 +13,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     // Spring sees "findByType" and automatically writes: 
     // "SELECT * FROM transactions WHERE type = ?"
     List<Transaction> findByType(String type);
+    List<Transaction> findByUserId(Long userId);
 }
