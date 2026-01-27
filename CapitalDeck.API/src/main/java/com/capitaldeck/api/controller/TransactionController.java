@@ -1,9 +1,12 @@
 package com.capitaldeck.api.controller;
 
 import com.capitaldeck.api.model.Transaction;
-import com.capitaldeck.api.service.TransactionService;
+import com.capitaldeck.api.model.User;
+import com.capitaldeck.api.repository.TransactionRepository;
+import com.capitaldeck.api.repository.UserRepository;
+import com.capitaldeck.api.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,26 +16,42 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173") // 3. Allow React to talk to us
 public class TransactionController {
 
-    // Dependency Injection: Inject the SERVICE, not the Repository
     @Autowired
-    private TransactionService transactionService;
+    TransactionRepository transactionRepository;
 
-    // 1. GET Request
+    @Autowired
+    UserRepository userRepository;
+
+    // Get the currently logged-in user
+    private User getCurrentUser() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findById(userDetails.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    // 1. GET ALL (FILTERED BY USER)
     @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
-        return ResponseEntity.ok(transactionService.getAllTransactions());
+    public List<Transaction> getAllTransactions() {
+        // Only get data for THIS user
+        return transactionRepository.findByUserId(getCurrentUser().getId());
     }
 
-    // 2. POST Request
+    // 2. CREATE TRANSACTION (Assign to User)
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
-        return ResponseEntity.ok(transactionService.createTransaction(transaction));
+    public Transaction createTransaction(@RequestBody Transaction transaction) {
+        transaction.setUser(getCurrentUser()); // Automatically link to logged-in user
+        return transactionRepository.save(transaction);
     }
 
-    // 3. DELETE Request
+    // 3. DELETE TRANSACTION (Security Check)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
-        transactionService.deleteTransaction(id);
-        return ResponseEntity.noContent().build(); // Returns 204 No Content (Standard for Delete)
+    public void deleteTransaction(@PathVariable Long id) {
+        Transaction tx = transactionRepository.findById(id).orElseThrow();
+        
+        // SECURITY CHECK: Ensure user owns this transaction before deleting
+        if (!tx.getUser().getId().equals(getCurrentUser().getId())) {
+            throw new RuntimeException("Unauthorized to delete this transaction");
+        }
+        
+        transactionRepository.deleteById(id);
     }
 }
