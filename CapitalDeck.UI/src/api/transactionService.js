@@ -1,24 +1,20 @@
 import api from './axiosConfig';
 
-// This mirrors Java Controller
-const TransactionService = {
-    
-    // GET /api/transactions
-    getAllTransactions: async () => {
-        const response = await api.get('/transactions');
+const DataService = {
+    getAllTransactions: async () => { const res = await api.get('/transactions'); return res.data; },
+    createTransaction: async (data) => { const res = await api.post('/transactions', data); return res.data; },
+    deleteTransaction: async (id) => { await api.delete(`/transactions/${id}`); },
+
+    // FULL DASHBOARD LOAD
+    getDashboardSummary: async () => {
+        const response = await api.get('/dashboard/summary');
         return response.data;
     },
 
-    // POST /api/transactions
-    createTransaction: async (transactionData) => {
-        const response = await api.post('/transactions', transactionData);
-        return response.data;
-    },
-
-    // DELETE /api/transactions/{id}
-    deleteTransaction: async (id) => {
-        await api.delete(`/transactions/${id}`);
-    }
+    createInvestment: async (data) => { return api.post('/dashboard/investments', data); },
+    createDebt: async (data) => { return api.post('/dashboard/debts', data); },
+    createGoal: async (data) => { return api.post('/dashboard/goals', data); },
+    deleteGoal: async (id) => { await api.delete(`/dashboard/goals/${id}`); }
 };
 
-export default TransactionService;
+export default DataService;
