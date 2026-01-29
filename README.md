@@ -1,67 +1,120 @@
-# 💰 CapitalDeck
+# 💰 CapitalDeck - Wealth Intelligence Platform
 
-A full-stack financial intelligence platform for tracking personal income and expenses, built with **Java (Spring Boot)** and **React**. This project demonstrates enterprise-grade architecture, RESTful API design, and a high-precision UI inspired by professional trading terminals.
+> **A comprehensive full-stack financial management system designed to track personal wealth, analyze spending habits, and manage investment portfolios with enterprise-grade security.**
 
 ![Project Status](https://img.shields.io/badge/status-active%20development-brightgreen)
 ![Java Version](https://img.shields.io/badge/Java-17%2B-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green)
 ![React Version](https://img.shields.io/badge/React-18.3-blue)
+![Database](https://img.shields.io/badge/MySQL-8.0-blue)
+
+---
 
 ## 📸 Screenshots
 
-> *Screenshots will be added as features are completed.*
+| **User Dashboard** | **Admin Dashboard** |
+|:---:|:---:|
+| ![Admin Dashboard](./screenshots/Dashboard1.png) | ![User Dashboard](./screenshots/Dashboard2.png) |
+| *Real-time financial overview* | *Admin view with system controls* |
+
+| **Analytics** | **Transaction History** |
+|:---:|:---:|
+| ![Analytics](./screenshots/AnalyticsPage.png) | ![Transactions](./screenshots/TransactionPage.png) |
+| *Expense breakdown & budget discipline* | *Searchable transaction list* |
+
+| **Add Transaction** | **Financial Goals** |
+|:---:|:---:|
+| ![Add Transaction](./screenshots/AddTransactionForm1.png) | ![Add Transaction](./screenshots/AddTransactionForm2.png) |
+| ![Add Transaction](./screenshots/AddTransactionForm3.png) | ![Add Transaction](./screenshots/AddTransactionForm4.png) |
+| *Smart category selection* | *Target tracking progress* |
+
+| **Secure Login** | **Account Registration** |
+|:---:|:---:|
+| ![Login](./screenshots/SignInForm.png) | ![Register](./screenshots/SignUpForm.png) |
+| *JWT Authentication* | *Role-based sign up* |
+
+| **Database Schema** | **Backend Architecture** |
+|:---:|:---:|
+| ![Schema](./screenshots/Schema.png) | ![Backend](./screenshots/BackendAPI.png) |
+| *MySQL Users Table* | *Folder Structure* |
+
+---
 
 ## ✨ Features
 
-### ✅ Implemented Features
-- **Full-Stack Architecture**: React frontend communicating with Spring Boot REST API.
-- **Layered Backend Architecture**: Professional separation of concerns (Controller → Service → Repository).
-- **CRUD Operations**:
-  - **Create**: Add transactions via a smart modal with dynamic category selection.
-  - **Read**: Real-time dashboard updates fetching data from H2 Database.
-  - **Delete**: Remove transactions with a secure confirmation flow.
-- **Data Visualization**:
-  - **Interactive Charts**: "Income vs Expense" Bar Charts using Recharts (Dynamic aggregation).
-  - **Smart Stats**: Real-time calculation of Total Balance, Income, and Expense.
-- **UX & Design**:
-  - **Smart Dashboard**: Gradient summary cards and responsive grid layouts.
-  - **Monospace Typography**: "Cascadia Code" for financial precision.
-  - **Glassmorphism**: Sticky navigation with backdrop blur and Lucide icons.
-  - **Defensive UI**: Smart category filtering (Income categories vs Expense categories).
+### 🔐 Security & Access Control
+- **Role-Based Access Control (RBAC)**: Distinct portals for **Users** and **Admins**.
+- **JWT Authentication**: Stateless, secure session management using JSON Web Tokens.
+- **Data Isolation**: Strict server-side checks ensure users can only access their own financial data.
+- **BCrypt Hashing**: Industry-standard password encryption.
 
-### 🚧 Planned Features
-- **Persistence**: Migration from H2 (In-Memory) to MySQL/PostgreSQL.
-- **Secure Authentication**: Spring Security + JWT Implementation.
-- **Advanced Reporting**: Downloadable PDF/CSV reports.
+### 👤 User Module (Personal Finance)
+- **Wealth Command Center**: Track **Assets** (Investments) vs **Liabilities** (Debts) in real-time.
+- **Transaction Management**: 
+  - Smart categorization with dynamic icons (Food, Rent, Salary, etc.).
+  - Search, Filter, and Delete capabilities.
+- **Financial Goals**: Set targets (e.g., "Buy Car") and visualize saving progress.
+- **Analytics**: "Income vs Expense" visualization using Recharts.
+- **Data Export**: Download transaction history as CSV.
+
+### 🛡️ Admin Module (System Management)
+- **System Health**: Monitor total users, transaction volume, and server status.
+- **User Management**: View user database and role distribution.
+- **Moderation**: Ability to ban/delete users from the platform.
+
+---
 
 ## 🎨 Design Philosophy
 
 ### Psychology of Money
+
 This project utilizes specific design choices to build trust and clarity:
-- **Visual Hierarchy**:
-  - **Dark Gradient**: Used for Total Balance to signify importance and solidity.
-  - **Green & Red**: Universally recognized signals for Profit (Income) and Loss (Expense).
-- **Typography**:
-  - **Cascadia Code**: Used exclusively. The monospaced font implies "Calculation," "Accuracy," and "Terminal-like precision," similar to professional trading platforms like Zerodha.
+
+* **Visual Hierarchy**:
+* **Dark Gradient**: Used for Total Balance to signify importance and solidity.
+* **Green & Red**: Universally recognized signals for Profit (Income) and Loss (Expense).
+
+
+* **Typography**:
+* **Cascadia Code**: Used exclusively. The monospaced font implies "Calculation," "Accuracy," and "Terminal-like precision," similar to professional trading platforms like Zerodha.
+
+---
 
 ## 🛠️ Tech Stack
 
 ### Backend (CapitalDeck.API)
 - **Framework:** Spring Boot 3.2 (Java)
-- **Architecture:** Layered (Controller -> Repository -> Database)
-- **Database:** H2 In-Memory (Dev), MySQL (Prod)
-- **API Documentation:** Swagger UI (`/swagger`)
-- **Key Patterns:**
-  - **Dependency Injection:** Wiring components using `@Autowired`.
-  - **JPA:** Object-Relational Mapping for database abstraction.
-  - **CORS:** Configured for secure Frontend-Backend communication.
+- **Security:** Spring Security 6 (JWT + BCrypt)
+- **Database:** MySQL 8.0
+- **ORM:** Hibernate / Spring Data JPA
+- **API Documentation:** Swagger UI
+- **Architecture:** Layered (Controller → Service → Repository)
 
 ### Frontend (CapitalDeck.UI)
-- **Framework:** React 18.3 with Vite
-- **HTTP Client:** Axios (Custom instance with Interceptors)
-- **Visualization:** Recharts
+- **Framework:** React 18.3 (Vite)
 - **Styling:** Tailwind CSS 3.4
-- **State Management:** React Hooks (useState, useEffect)
+- **HTTP Client:** Axios (Interceptors for Bearer Tokens)
+- **Visualization:** Recharts
+- **Icons:** Lucide React
+
+---
+
+## 🗄 Database Schema (10 Tables)
+
+The application moves beyond simple expense tracking by utilizing a normalized schema with **10 core entities**:
+
+1.  **`users`**: Stores authentication credentials and Roles (`ROLE_USER`, `ROLE_ADMIN`).
+2.  **`transactions`**: Core income and expense records linked to users.
+3.  **`categories`**: Categorization logic for transactions.
+4.  **`financial_goals`**: Savings targets with progress tracking.
+5.  **`investments`**: Asset tracking (Stocks, Mutual Funds).
+6.  **`debts`**: Liability tracking (Loans, EMIs).
+7.  **`budgets`**: Monthly spending limits.
+8.  **`subscriptions`**: Recurring payment tracking.
+9.  **`payment_methods`**: Source of funds (Credit Card, Cash, UPI).
+10. **`notifications`**: System alerts and reminders.
+
+---
 
 ## 🚀 Getting Started
 
@@ -69,6 +122,7 @@ This project utilizes specific design choices to build trust and clarity:
 - [Java JDK 17+](https://adoptium.net/)
 - [Maven](https://maven.apache.org/)
 - [Node.js 18+](https://nodejs.org/)
+- [MySQL Server](https://dev.mysql.com/downloads/installer/)
 
 ### Installation
 
@@ -78,7 +132,16 @@ This project utilizes specific design choices to build trust and clarity:
    cd CapitalDeck
    ```
 
-2. **Set up the Frontend**
+2. **Configure Database**
+   Open `CapitalDeck.API/src/main/resources/application.properties` and update:
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/capitaldeck_db?createDatabaseIfNotExist=true
+   spring.datasource.username=YOUR_MYSQL_USERNAME
+   spring.datasource.password=YOUR_MYSQL_PASSWORD
+   spring.jpa.hibernate.ddl-auto=update
+   ```
+
+3. **Set up the Frontend**
    ```bash
    cd CapitalDeck.UI
 
@@ -90,7 +153,7 @@ This project utilizes specific design choices to build trust and clarity:
    ```
    Frontend will run on `http://localhost:5173`
 
-3. **Set up the Backend** (Once implemented)
+4. **Set up the Backend** (Once implemented)
    ```bash
    cd ../CapitalDeck.API
 
@@ -99,38 +162,54 @@ This project utilizes specific design choices to build trust and clarity:
    ```
    Backend will run on `http://localhost:8080`
 
-4. **Open in browser**
+5. **Open in browser**
    Navigate to `http://localhost:5173`
+
+---
 
 ## 📁 Project Structure
 
 ```
 CapitalDeck/
-├── CapitalDeck.API/          # Spring Boot Backend
+├── CapitalDeck.API/                # Spring Boot Backend
 │   ├── src/main/java/com/capitaldeck/api/
-│   │   ├── controller/       # REST Endpoints (The "Waiter")
-│   │   ├── service/          # Business Logic (The "Chef")
-│   │   ├── repository/       # Database Access (The "Pantry")
-│   │   └── model/            # JPA Entities (The "Ingredients")
+│   │   ├── config/                 # Security & App Config
+│   │   ├── controller/             # REST API Controllers (Admin, Auth, Dashboard)
+│   │   ├── model/                  # Database Entities (User, Transaction, Goals)
+│   │   ├── payload/                # Request/Response DTOs
+│   │   ├── repository/             # JPA Repositories
+│   │   └── security/               # JWT & UserDetails Logic
+│   ├── src/main/resources/         # App Properties & Static Resources
 │   └── pom.xml               # Maven Dependencies
 │
-└── CapitalDeck.UI/           # React Frontend
+└── CapitalDeck.UI/                 # React Frontend
     ├── src/
-    │   ├── api/              # Axios Services (transactionService.js)
-    │   ├── components/       # Reusable UI (Charts, Modals, Cards)
-    │   ├── pages/            # Page Views (Dashboard.jsx)
-    │   └── App.jsx           # Main Router
-    └── tailwind.config.js    # Design System Config
+    │   ├── api/                    # Axios Services (Admin, Auth, Transaction)
+    │   ├── components/             # Reusable UI (Cards, Charts, Modals)
+    │   ├── pages/                  # Views (Dashboard, Login, AdminPanel)
+    │   └── App.jsx                 # Main Router
+    ├── public/                     # Static Assets
+    └── tailwind.config.js          # Styling Config
 
 ```
 
-## 🔌 API Endpoints
+---
 
-| Method | Endpoint | Description |
-| --- | --- | --- |
-| **GET** | `/api/transactions` | Retrieve all transactions |
-| **POST** | `/api/transactions` | Create a new transaction |
-| **DELETE** | `/api/transactions/{id}` | Delete a transaction by ID |
+## 🔌 API Endpoints Overview
+
+| Module | Method | Endpoint | Description | Role |
+| --- | --- | --- | --- | --- |
+| **Auth** | `POST` | `/api/auth/signup` | Register (User/Admin) | Public |
+| **Auth** | `POST` | `/api/auth/signin` | Login & Get Token | Public |
+| **Dashboard** | `GET` | `/api/dashboard/summary` | Get Investments, Debts, Goals | User |
+| **Transactions** | `GET` | `/api/transactions` | Get User's Transactions | User |
+| **Transactions** | `POST` | `/api/transactions` | Create Transaction | User |
+| **Goals** | `DELETE` | `/api/dashboard/goals/{id}` | Delete a Financial Goal | User |
+| **Admin** | `GET` | `/api/admin/stats` | System Health Stats | **Admin** |
+| **Admin** | `GET` | `/api/admin/users` | List All Users | **Admin** |
+| **Admin** | `DELETE` | `/api/admin/users/{id}` | Ban User | **Admin** |
+
+---
 
 ## 👨‍💻 Author
 
@@ -138,6 +217,8 @@ CapitalDeck/
 
 * GitHub : [@kaushalladiya](https://www.google.com/search?q=https://github.com/kaushalladiya)
 * LinkedIn : [@kaushalladiya](https://www.google.com/search?q=https://linkedin.com/in/kaushalladiya)
+
+---
 
 ## 🙏 Acknowledgments
 
