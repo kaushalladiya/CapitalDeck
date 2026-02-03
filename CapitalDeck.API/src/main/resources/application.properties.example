@@ -1,0 +1,27 @@
+# 1. Server Configuration
+server.port=8080
+
+# 2. Application Name
+spring.application.name=CapitalDeck-API
+
+# 3. MySQL Database Configuration (The Heart Transplant)
+spring.datasource.url=jdbc:mysql://localhost:3306/capitaldeck_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=YOUR_PASSWORD_HERE
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# 4. JPA / Hibernate Settings
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# 5. Swagger Configuration
+springdoc.swagger-ui.path=/swagger
+springdoc.swagger-ui.operations-sorter=alpha
+
+# 6. Security Configuration
+# This acts as the "Private Key". In production, this should be a long, random string.
+# For now, we use this specific string for the tutorial.
+app.jwtSecret=YOUR_SECRET_KEY_HERE
+app.jwtExpirationMs=86400000 
+# (86400000 ms = 24 hours)
